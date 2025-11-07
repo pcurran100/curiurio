@@ -1,0 +1,107 @@
+App.css
++12
+-0
+
+  background: rgba(255, 255, 255, 0.2);
+}
+.waitlistBanner__feedback {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-align: center;
+  max-width: 320px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.waitlistBanner__feedback--error {
+  color: #ff8a80;
+}
+.intro {
+  position: absolute;
+  top: 62%;
+App.jsx
++59
+-4
+
+import { useState } from 'react'
+import './App.css'
+function App() {
+  const asset = (path) => `https://coveomusic.com${path}`
+  const waitlistEndpoint = import.meta.env.VITE_WAITLIST_ENDPOINT ?? ''
+  const [email, setEmail] = useState('')
+  const [submitState, setSubmitState] = useState({ status: 'idle', message: '' })
+  const carouselItems = [
+    {
+    },
+  ]
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    if (!waitlistEndpoint) {
+      setSubmitState({
+        status: 'error',
+        message: 'Wait list endpoint is not configured yet.',
+      })
+      return
+    }
+    try {
+      setSubmitState({ status: 'submitting', message: '' })
+      const response = await fetch(waitlistEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      })
+      if (!response.ok) {
+        throw new Error('Unable to submit email right now.')
+      }
+      setEmail('')
+      setSubmitState({
+        status: 'success',
+        message: 'Thanks! We added you to the wait list.',
+      })
+    } catch (error) {
+      setSubmitState({
+        status: 'error',
+        message: error instanceof Error ? error.message : 'Something went wrong.',
+      })
+    }
+  }
+  return (
+    <div className="page">
+      <div className="carouselContainer">
+          <p className="waitlistBanner__title uppercase mono">Join the wait list</p>
+          <form
+            className="waitlistBanner__form"
+            onSubmit={(event) => {
+              event.preventDefault()
+            }}
+            onSubmit={handleSubmit}
+          >
+            <label htmlFor="waitlist-banner-email" className="visually-hidden">
+              Email address
+              placeholder="Enter your email"
+              required
+              autoComplete="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <button type="submit" className="btn btn__blurred dark mono">
+            <button
+              type="submit"
+              className="btn btn__blurred dark mono"
+              disabled={submitState.status === 'submitting'}
+            >
+              Notify Me
+            </button>
+          </form>
+          {submitState.message ? (
+            <p
+              className={`waitlistBanner__feedback ${
+                submitState.status === 'error' ? 'waitlistBanner__feedback--error' : ''
+              }`}
+            >
+              {submitState.message}
+            </p>
+          ) : null}
+        </div>
+        <div className="heroScript" aria-hidden="true">
+          <HeroScript />
