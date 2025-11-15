@@ -131,7 +131,7 @@ function App() {
     {
       index: 15,
       title: 'Fela Kuti',
-      artwork: '/FelaKuti.png',
+      artwork: './public/FelaKuti.png',
       url: 'https://en.wikipedia.org/wiki/Fela_Kuti',
       colour: '#575F2E',
       featured: false,
