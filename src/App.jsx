@@ -3,6 +3,8 @@ import './App.css'
 
 function App() {
   const asset = (path) => `https://coveomusic.com${path}`
+  const baseUrl = import.meta.env.BASE_URL
+  const localAsset = (path) => `${baseUrl}${path.startsWith('/') ? path.slice(1) : path}`
   const waitlistEndpoint = import.meta.env.VITE_WAITLIST_ENDPOINT ?? ''
   const [email, setEmail] = useState('')
   const [submitState, setSubmitState] = useState({ status: 'idle', message: '' })
@@ -11,7 +13,7 @@ function App() {
     {
       index: 0,
       title: 'Antikythera Mechanism',
-      artwork: '/Antikytheramechanism.png',
+      artwork: localAsset('/Antikytheramechanism.png'),
       url: 'https://en.wikipedia.org/wiki/Antikythera_mechanism',
       colour: '#030303',
       featured: false,
@@ -19,7 +21,7 @@ function App() {
     {
       index: 1,
       title: 'Markov Chain Choir',
-      artwork: '/Markov.png',
+      artwork: localAsset('/Markov.png'),
       url: 'https://www.youtube.com/watch?v=KZeIEiBrT_w',
       colour: '#1A303D',
       featured: false,
@@ -35,7 +37,7 @@ function App() {
     {
       index: 3,
       title: 'Voyager Golden Record',
-      artwork: '/VoyagerGoldenRecord.png',
+      artwork: localAsset('/VoyagerGoldenRecord.png'),
       url: 'https://en.wikipedia.org/wiki/Voyager_Golden_Record',
       colour: 'rgba(255,255,255,0.8)',
       featured: false,
@@ -59,7 +61,7 @@ function App() {
     {
       index: 6,
       title: 'The Bloop',
-      artwork: '/Bloop.png',
+      artwork: localAsset('/Bloop.png'),
       url: 'https://en.wikipedia.org/wiki/Bloop',
       colour: '#F7BBCA',
       featured: false,
@@ -67,7 +69,7 @@ function App() {
     {
       index: 7,
       title: 'Shipping Forecast',
-      artwork: '/Shippingforecast.png',
+      artwork: localAsset('/Shippingforecast.png'),
       url: 'https://youtu.be/CxHa5KaMBcM?si=RDZpJXke_x_ND6mz',
       colour: '#201A40',
       featured: false,
@@ -83,7 +85,7 @@ function App() {
     {
       index: 9,
       title: 'Balloonfest ’86',
-      artwork: '/GreatBalloonFest.png',
+      artwork: localAsset('/GreatBalloonFest.png'),
       url: 'https://en.wikipedia.org/wiki/Balloonfest_%2786',
       colour: '#8DC5E6',
       featured: false,
@@ -107,7 +109,7 @@ function App() {
     {
       index: 12,
       title: 'Voynich Manuscript',
-      artwork: '/Scroll.png',
+      artwork: localAsset('/Scroll.png'),
       url: 'https://en.wikipedia.org/wiki/Voynich_manuscript',
       colour: '#1A303D',
       featured: false,
@@ -131,7 +133,7 @@ function App() {
     {
       index: 15,
       title: 'Fela Kuti',
-      artwork: './public/FelaKuti.png',
+      artwork: localAsset('/FelaKuti.png'),
       url: 'https://en.wikipedia.org/wiki/Fela_Kuti',
       colour: '#575F2E',
       featured: false,
@@ -155,7 +157,7 @@ function App() {
     {
       index: 18,
       title: 'Project Azorian',
-      artwork: '/ProjectAzorian.png',
+      artwork: localAsset('/ProjectAzorian.png'),
       url: 'https://en.wikipedia.org/wiki/Project_Azorian',
       colour: '#201A40',
       featured: false,
@@ -273,7 +275,7 @@ function App() {
         </p>
         <div className="intro">
           <div className="logoVideoWrapper">
-            <video className="logoVideo" src="/logo.mp4" autoPlay loop muted playsInline />
+            <video className="logoVideo" src={localAsset('/logo.mp4')} autoPlay loop muted playsInline />
           </div>
         </div>
         <div className="fade" />
