@@ -1,11 +1,15 @@
 import { useState } from 'react'
+import { createClient } from '@supabase/supabase-js'
 import './App.css'
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null
 
 function App() {
   const asset = (path) => `https://coveomusic.com${path}`
   const baseUrl = import.meta.env.BASE_URL
   const localAsset = (path) => `${baseUrl}${path.startsWith('/') ? path.slice(1) : path}`
-  const waitlistEndpoint = import.meta.env.VITE_WAITLIST_ENDPOINT ?? ''
   const [email, setEmail] = useState('')
   const [submitState, setSubmitState] = useState({ status: 'idle', message: '' })
 
@@ -191,26 +195,32 @@ function App() {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!waitlistEndpoint) {
+    if (!supabase) {
       setSubmitState({
         status: 'error',
-        message: 'Wait list endpoint is not configured yet.',
+        message: 'Wait list is not configured yet.',
       })
       return
     }
 
     try {
       setSubmitState({ status: 'submitting', message: '' })
-      const response = await fetch(waitlistEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      })
+      
+      const { error } = await supabase
+        .from('users')
+        .insert([{ email }])
 
-      if (!response.ok) {
-        throw new Error('Unable to submit email right now.')
+      if (error) {
+        // Handle duplicate email error gracefully
+        if (error.code === '23505') {
+          setSubmitState({
+            status: 'success',
+            message: 'You\'re already on the wait list!',
+          })
+          setEmail('')
+          return
+        }
+        throw error
       }
 
       setEmail('')
