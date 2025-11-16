@@ -386,20 +386,21 @@ function App() {
     }
   }, [])
 
-  return (
-    <div className="page">
-      <section className="waitlistSection">
+  const WaitlistSection = ({ position }) => {
+    const inputId = `waitlist-email-${position}`
+    return (
+      <section className={`waitlistSection waitlistSection--${position}`}>
         <div className="waitlistPanel">
           <p className="waitlistPanel__title uppercase mono">Join the wait list</p>
           <form
             className="waitlistPanel__form"
             onSubmit={handleSubmit}
           >
-            <label htmlFor="waitlist-panel-email" className="visually-hidden">
+            <label htmlFor={inputId} className="visually-hidden">
               Email address
             </label>
             <input
-              id="waitlist-panel-email"
+              id={inputId}
               type="email"
               name="email"
               placeholder="Enter your email"
@@ -427,6 +428,12 @@ function App() {
           ) : null}
         </div>
       </section>
+    )
+  }
+
+  return (
+    <div className="page">
+      <WaitlistSection position="top" />
       <div className="sectionTrack">
         {sections.map((section, index) => (
           <section
@@ -445,6 +452,7 @@ function App() {
           </section>
         ))}
       </div>
+      <WaitlistSection position="bottom" />
     </div>
   )
 }

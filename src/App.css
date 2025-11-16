@@ -30,19 +30,24 @@
   justify-content: center;
 }
 
+.waitlistSection--bottom {
+  margin-top: clamp(16vh, 22vh, 30vh);
+  margin-bottom: 0;
+}
+
 .waitlistPanel {
   width: min(780px, 100%);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: clamp(24px, 4vw, 48px);
-  padding: clamp(1.75rem, 3.5vw, 3.75rem);
-  backdrop-filter: blur(18px);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  backdrop-filter: none;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   align-items: center;
   text-align: center;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  box-shadow: none;
 }
 
 .waitlistPanel__title {
