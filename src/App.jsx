@@ -4,6 +4,11 @@ import './App.css'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+// Temporary debug - remove after testing
+if (import.meta.env.DEV) {
+  console.log('Supabase URL:', supabaseUrl ? '✓ Set' : '✗ Missing')
+  console.log('Supabase Key:', supabaseAnonKey ? '✓ Set' : '✗ Missing')
+}
 const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null
 
 function App() {
