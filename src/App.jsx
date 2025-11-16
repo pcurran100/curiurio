@@ -346,7 +346,7 @@ function App() {
 
   useEffect(() => {
     const minScale = 0.5
-    const maxScale = 3
+    const maxScale = 2.5
 
     const updateScales = () => {
       const viewportHeight = window.innerHeight || 1

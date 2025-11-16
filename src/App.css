@@ -138,7 +138,7 @@
 }
 
 .bubbleShell--hero {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 244, 244, 0.85) 100%);
+  background: #000;
   color: var(--color-ink);
   padding: 0;
 }
@@ -432,8 +432,8 @@ button.btn {
 }
 
 .logoVideoWrapper {
-  width: clamp(135px, 16.5vw, 180px);
-  height: clamp(135px, 16.5vw, 180px);
+  width: clamp(185px, 22vw, 240px);
+  height: clamp(185px, 22vw, 240px);
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
@@ -441,6 +441,7 @@ button.btn {
   align-items: center;
   justify-content: center;
   background-color: var(--color-black);
+  z-index: 5;
 }
 
 .logoVideo {
