@@ -38,10 +38,10 @@
 }
 
 .bubbleShell {
-  width: min(1200px, calc(100vw - 4vw));
-  height: min(96vh, 920px);
+  width: min(92vw, 92vh, 940px);
+  aspect-ratio: 1 / 1;
   background: rgba(255, 255, 255, 0.92);
-  border-radius: clamp(32px, 6vw, 60px);
+  border-radius: 50%;
   padding: clamp(1.25rem, 3vw, 3rem);
   position: relative;
   overflow: hidden;

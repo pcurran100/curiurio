@@ -378,12 +378,12 @@ function App() {
   ]
 
   const [bubbleScales, setBubbleScales] = useState(() =>
-    sections.map((_, index) => (index === 0 ? 0.92 : 0.82))
+    sections.map((_, index) => (index === 0 ? 0.5 : 0.5))
   )
 
   useEffect(() => {
-    const minScale = 0.78
-    const maxScale = 1
+    const minScale = 0.5
+    const maxScale = 3
 
     const updateScales = () => {
       const viewportHeight = window.innerHeight || 1
