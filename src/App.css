@@ -274,7 +274,7 @@ button.btn {
 }
 
 .mono {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Milligram', sans-serif;
 }
 
 .muted {
@@ -400,7 +400,7 @@ button.btn {
 }
 
 .side-text span {
-  font-family: 'Eiko', serif;
+  font-family: 'Milligram', sans-serif;
   font-style: italic;
 }
 
@@ -416,7 +416,7 @@ button.btn {
 
 .intro {
   position: absolute;
-  top: 62%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -610,7 +610,7 @@ button.btn {
 
 .section.about .content h3 span {
   display: block;
-  font-family: 'Eiko', serif;
+  font-family: 'Milligram', sans-serif;
   font-weight: 400;
   font-size: 4.4rem;
   letter-spacing: -0.02em;
@@ -654,7 +654,7 @@ button.btn {
   font-size: 4rem;
   letter-spacing: -0.02em;
   text-transform: none;
-  font-family: 'Eiko', serif;
+  font-family: 'Milligram', sans-serif;
   font-weight: 400;
 }
 
