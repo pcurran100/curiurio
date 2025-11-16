@@ -252,10 +252,6 @@ function App() {
           <div className="heroScript" aria-hidden="true">
             <HeroScript />
           </div>
-          <p className="mono previewText muted">
-            <span className="desktop">Click icons to learn something new</span>
-            <span className="mobile">Tap icons to learn something new</span>
-          </p>
           <div className="intro">
             <div className="logoVideoWrapper">
               <video className="logoVideo" src={localAsset('/logo.mp4')} autoPlay loop muted playsInline />
