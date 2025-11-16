@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import './App.css'
 
@@ -17,6 +17,8 @@ function App() {
   const localAsset = (path) => `${baseUrl}${path.startsWith('/') ? path.slice(1) : path}`
   const [email, setEmail] = useState('')
   const [submitState, setSubmitState] = useState({ status: 'idle', message: '' })
+  const sectionRefs = useRef([])
+  const rafRef = useRef(null)
 
   const carouselItems = [
     {
@@ -241,74 +243,205 @@ function App() {
     }
   }
 
-  return (
-    <div className="page">
-      <div className="carouselContainer">
-        <div className="waitlistBanner">
-          <p className="waitlistBanner__title uppercase mono">Join the wait list</p>
-          <form
-            className="waitlistBanner__form"
-            onSubmit={handleSubmit}
-          >
-            <label htmlFor="waitlist-banner-email" className="visually-hidden">
-              Email address
-            </label>
-            <input
-              id="waitlist-banner-email"
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              required
-              autoComplete="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-            <button
-              type="submit"
-              className="btn btn__blurred dark mono"
-              disabled={submitState.status === 'submitting'}
+  const sections = [
+    {
+      id: 'hero',
+      className: 'bubbleShell--hero',
+      content: (
+        <div className="carouselContainer">
+          <div className="waitlistBanner">
+            <p className="waitlistBanner__title uppercase mono">Join the wait list</p>
+            <form
+              className="waitlistBanner__form"
+              onSubmit={handleSubmit}
             >
-              Notify Me
-            </button>
-          </form>
-          {submitState.message ? (
-            <p
-              className={`waitlistBanner__feedback ${
-                submitState.status === 'error' ? 'waitlistBanner__feedback--error' : ''
-              }`}
-            >
-              {submitState.message}
-            </p>
-          ) : null}
-        </div>
-        <div className="heroScript" aria-hidden="true">
-          <HeroScript />
-        </div>
-        <p className="mono previewText muted">
-          <span className="desktop">Click icons to learn something new</span>
-          <span className="mobile">Tap icons to learn something new</span>
-        </p>
-        <div className="intro">
-          <div className="logoVideoWrapper">
-            <video className="logoVideo" src={localAsset('/logo.mp4')} autoPlay loop muted playsInline />
+              <label htmlFor="waitlist-banner-email" className="visually-hidden">
+                Email address
+              </label>
+              <input
+                id="waitlist-banner-email"
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+                autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <button
+                type="submit"
+                className="btn btn__blurred dark mono"
+                disabled={submitState.status === 'submitting'}
+              >
+                Notify Me
+              </button>
+            </form>
+            {submitState.message ? (
+              <p
+                className={`waitlistBanner__feedback ${
+                  submitState.status === 'error' ? 'waitlistBanner__feedback--error' : ''
+                }`}
+              >
+                {submitState.message}
+              </p>
+            ) : null}
+          </div>
+          <div className="heroScript" aria-hidden="true">
+            <HeroScript />
+          </div>
+          <p className="mono previewText muted">
+            <span className="desktop">Click icons to learn something new</span>
+            <span className="mobile">Tap icons to learn something new</span>
+          </p>
+          <div className="intro">
+            <div className="logoVideoWrapper">
+              <video className="logoVideo" src={localAsset('/logo.mp4')} autoPlay loop muted playsInline />
+            </div>
+          </div>
+          <div className="fade" />
+          <div className="carousel" style={{ '--itemCount': carouselItems.length }}>
+            {carouselItems.map((item) => (
+              <a
+                key={item.index}
+                className={`release ${item.featured ? 'featuredRelease' : ''}`}
+                style={{ '--item': item.index, '--vinylColour': item.colour }}
+                href={item.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={item.title}
+              >
+                <img src={item.artwork} alt={`${item.title} artwork`} />
+              </a>
+            ))}
           </div>
         </div>
-        <div className="fade" />
-        <div className="carousel" style={{ '--itemCount': carouselItems.length }}>
-          {carouselItems.map((item) => (
-            <a
-              key={item.index}
-              className={`release ${item.featured ? 'featuredRelease' : ''}`}
-              style={{ '--item': item.index, '--vinylColour': item.colour }}
-              href={item.url}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={item.title}
-            >
-              <img src={item.artwork} alt={`${item.title} artwork`} />
-            </a>
-          ))}
+      ),
+    },
+    {
+      id: 'story',
+      className: 'bubbleShell--story',
+      content: (
+        <div className="bubblePlaceholder">
+          <p className="bubbleEyebrow mono uppercase">Field Notes</p>
+          <h2>Stories we&apos;re still collecting</h2>
+          <p>
+            We&apos;re stitching together essays, maps, and late night transmissions about curiosity rituals.
+            This space will evolve into a living atlas of the strange, the generous, and the slightly haunted.
+          </p>
+          <div className="placeholderGrid">
+            <div>
+              <p className="mono muted">Fragments</p>
+              <ul>
+                <li>Signals from the deep archive</li>
+                <li>Rooms you can only unlock by listening</li>
+                <li>Notes-to-self written on cassette liners</li>
+              </ul>
+            </div>
+            <div>
+              <p className="mono muted">Status</p>
+              <p>Drafting visuals. Recording interviews. Waiting for the next anomaly.</p>
+            </div>
+          </div>
         </div>
+      ),
+    },
+    {
+      id: 'lab',
+      className: 'bubbleShell--lab',
+      content: (
+        <div className="bubblePlaceholder">
+          <p className="bubbleEyebrow mono uppercase">Lab Work</p>
+          <h2>Building the curiosity engine</h2>
+          <p>
+            Expect experiments in communal research: pop-up listening parties, midnight office hours, and a tool
+            that politely rearranges your attention.
+          </p>
+          <div className="labList">
+            <div>
+              <h3>Next up</h3>
+              <ul>
+                <li>Prototype for collaborative annotations</li>
+                <li>Guided wander mode for the carousel</li>
+                <li>Invite-only bug hunts</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Want in?</h3>
+              <p>
+                Add your email above or send a voice note. We&apos;ll loop you in when the door opens.
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+  ]
+
+  const [bubbleScales, setBubbleScales] = useState(() =>
+    sections.map((_, index) => (index === 0 ? 0.92 : 0.82))
+  )
+
+  useEffect(() => {
+    const minScale = 0.78
+    const maxScale = 1
+
+    const updateScales = () => {
+      const viewportHeight = window.innerHeight || 1
+      const nextScales = sectionRefs.current.map((section, index) => {
+        if (!section) return index === 0 ? 0.92 : minScale
+        const rect = section.getBoundingClientRect()
+        const sectionCenter = rect.top + rect.height / 2
+        const viewportCenter = viewportHeight / 2
+        const distance = Math.abs(sectionCenter - viewportCenter)
+        const normalised = Math.min(distance / (viewportHeight * 0.8), 1)
+        const scale = maxScale - normalised * (maxScale - minScale)
+        return Number(scale.toFixed(3))
+      })
+
+      setBubbleScales((prev) => {
+        const changed = nextScales.some((scale, idx) => scale !== prev[idx])
+        return changed ? nextScales : prev
+      })
+      rafRef.current = null
+    }
+
+    const onScroll = () => {
+      if (rafRef.current) return
+      rafRef.current = requestAnimationFrame(updateScales)
+    }
+
+    updateScales()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
+    }
+  }, [])
+
+  return (
+    <div className="page">
+      <div className="sectionTrack">
+        {sections.map((section, index) => (
+          <section
+            key={section.id}
+            className="bubbleSection"
+            ref={(element) => {
+              sectionRefs.current[index] = element
+            }}
+          >
+            <div
+              className={`bubbleShell ${section.className}`}
+              style={{ '--bubble-scale': bubbleScales[index]?.toString() ?? '0.85' }}
+            >
+              {section.content}
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   )
