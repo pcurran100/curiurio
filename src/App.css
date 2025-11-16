@@ -22,15 +22,83 @@
   padding: clamp(4vh, 6vh, 8vh) 0;
 }
 
+.waitlistSection {
+  width: 100%;
+  padding: 0 clamp(1.5rem, 6vw, 8rem);
+  margin-bottom: clamp(5vh, 8vh, 12vh);
+  display: flex;
+  justify-content: center;
+}
+
+.waitlistPanel {
+  width: min(780px, 100%);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: clamp(24px, 4vw, 48px);
+  padding: clamp(1.75rem, 3.5vw, 3.75rem);
+  backdrop-filter: blur(18px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
+.waitlistPanel__title {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  letter-spacing: 0.45em;
+}
+
+.waitlistPanel__form {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75em;
+  justify-content: center;
+}
+
+.waitlistPanel__form input {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  padding: 0.5em 1em;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  min-width: 240px;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.waitlistPanel__form input::placeholder {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.waitlistPanel__form input:focus-visible {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.waitlistPanel__feedback {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  max-width: 360px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.waitlistPanel__feedback--error {
+  color: #ff8a80;
+}
+
 .sectionTrack {
   display: flex;
   flex-direction: column;
-  gap: clamp(24vh, 36vh, 52vh);
-  padding: clamp(30vh, 45vh, 60vh) 0 clamp(24vh, 32vh, 40vh);
+  gap: clamp(12vh, 18vh, 26vh);
+  padding: clamp(8vh,12vh, 16vh) 0 clamp(24vh, 32vh, 40vh);
 }
 
 .bubbleSection {
-  min-height: 10vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,9 +128,14 @@
   box-shadow: inset 0 0 60px rgba(255, 255, 255, 0.18);
 }
 
+.bubbleShell--hero::after {
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.08);
+}
+
 .bubbleShell--hero {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 244, 244, 0.85) 100%);
   color: var(--color-ink);
+  padding: 0;
 }
 
 .bubbleShell--story {
@@ -337,74 +410,8 @@ button.btn {
   }
 }
 
-.waitlistBanner {
-  position: absolute;
-  top: 6%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  display: flex;
-  flex-direction: column;
-  gap: 0.6em;
-  align-items: center;
-  z-index: 4;
-  color: #fff;
-}
-
-.bubbleShell--hero .waitlistBanner,
 .bubbleShell--hero .previewText {
   color: #000;
-}
-
-.waitlistBanner__title {
-  font-size: 1.125rem;
-  letter-spacing: 0.45em;
-  text-align: center;
-}
-
-.waitlistBanner__form {
-  display: flex;
-  gap: 0.5em;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.waitlistBanner__form input {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #fff;
-  padding: 0.4125em 0.825em;
-  border-radius: 999px;
-  font-size: 1.05rem;
-  min-width: 210px;
-  outline: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.waitlistBanner__form .btn {
-  font-size: 1.05rem;
-  padding: 0.4125em 1.05em;
-}
-
-.waitlistBanner__form input::placeholder {
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.waitlistBanner__form input:focus-visible {
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.waitlistBanner__feedback {
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-align: center;
-  max-width: 320px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.waitlistBanner__feedback--error {
-  color: #ff8a80;
 }
 
 .intro {
@@ -458,9 +465,9 @@ button.btn {
   width: var(--diameter);
   height: var(--diameter);
   position: absolute;
-  top: 32%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   animation: spin 120s linear infinite;
   border-radius: 50%;
   z-index: 1;
@@ -468,8 +475,8 @@ button.btn {
 
 @media screen and (max-width: 768px) {
   .carousel {
-    top: 62%;
-    animation: spinMobile 120s linear infinite;
+    top: 56%;
+    animation: spin 120s linear infinite;
   }
 }
 
@@ -840,18 +847,9 @@ footer {
 
 @keyframes spin {
   from {
-    transform: translateX(-50%) rotate(45deg) scale(var(--carouselScale));
+    transform: translate(-50%, -50%) rotate(45deg) scale(var(--carouselScale));
   }
   to {
-    transform: translateX(-50%) rotate(405deg) scale(var(--carouselScale));
-  }
-}
-
-@keyframes spinMobile {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg) scale(var(--carouselScale));
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg) scale(var(--carouselScale));
+    transform: translate(-50%, -50%) rotate(405deg) scale(var(--carouselScale));
   }
 }

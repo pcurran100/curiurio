@@ -249,43 +249,6 @@ function App() {
       className: 'bubbleShell--hero',
       content: (
         <div className="carouselContainer">
-          <div className="waitlistBanner">
-            <p className="waitlistBanner__title uppercase mono">Join the wait list</p>
-            <form
-              className="waitlistBanner__form"
-              onSubmit={handleSubmit}
-            >
-              <label htmlFor="waitlist-banner-email" className="visually-hidden">
-                Email address
-              </label>
-              <input
-                id="waitlist-banner-email"
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                required
-                autoComplete="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-              <button
-                type="submit"
-                className="btn btn__blurred dark mono"
-                disabled={submitState.status === 'submitting'}
-              >
-                Notify Me
-              </button>
-            </form>
-            {submitState.message ? (
-              <p
-                className={`waitlistBanner__feedback ${
-                  submitState.status === 'error' ? 'waitlistBanner__feedback--error' : ''
-                }`}
-              >
-                {submitState.message}
-              </p>
-            ) : null}
-          </div>
           <div className="heroScript" aria-hidden="true">
             <HeroScript />
           </div>
@@ -425,6 +388,45 @@ function App() {
 
   return (
     <div className="page">
+      <section className="waitlistSection">
+        <div className="waitlistPanel">
+          <p className="waitlistPanel__title uppercase mono">Join the wait list</p>
+          <form
+            className="waitlistPanel__form"
+            onSubmit={handleSubmit}
+          >
+            <label htmlFor="waitlist-panel-email" className="visually-hidden">
+              Email address
+            </label>
+            <input
+              id="waitlist-panel-email"
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+              autoComplete="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <button
+              type="submit"
+              className="btn btn__blurred dark mono"
+              disabled={submitState.status === 'submitting'}
+            >
+              Notify Me
+            </button>
+          </form>
+          {submitState.message ? (
+            <p
+              className={`waitlistPanel__feedback ${
+                submitState.status === 'error' ? 'waitlistPanel__feedback--error' : ''
+              }`}
+            >
+              {submitState.message}
+            </p>
+          ) : null}
+        </div>
+      </section>
       <div className="sectionTrack">
         {sections.map((section, index) => (
           <section
