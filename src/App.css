@@ -25,12 +25,12 @@
 .sectionTrack {
   display: flex;
   flex-direction: column;
-  gap: clamp(12vh, 18vh, 26vh);
-  padding: clamp(4vh, 6vh, 8vh) 0 clamp(24vh, 32vh, 40vh);
+  gap: clamp(24vh, 36vh, 52vh);
+  padding: clamp(30vh, 45vh, 60vh) 0 clamp(24vh, 32vh, 40vh);
 }
 
 .bubbleSection {
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   align-items: center;
   justify-content: center;
