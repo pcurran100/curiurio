@@ -50,6 +50,14 @@
   box-shadow: none;
 }
 
+.waitlistPanel .btn {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.55em 1.4em;
+  font-size: 1.05rem;
+  border-radius: 999px;
+}
+
 .waitlistPanel__title {
   font-size: clamp(1rem, 2vw, 1.4rem);
   letter-spacing: 0.45em;
@@ -69,10 +77,11 @@
   color: #fff;
   padding: 0.5em 1em;
   border-radius: 999px;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   min-width: 240px;
   outline: none;
   transition: border-color 0.2s ease, background 0.2s ease;
+  font-family: inherit;
 }
 
 .waitlistPanel__form input::placeholder {
@@ -220,6 +229,7 @@
 
 .page a {
   color: inherit;
+  font-family: inherit;
 }
 
 .visually-hidden {
@@ -279,7 +289,7 @@ button.btn {
 }
 
 .mono {
-  font-family: 'DM Mono', monospace;
+  font-family: inherit;
 }
 
 .muted {
@@ -405,7 +415,7 @@ button.btn {
 }
 
 .side-text span {
-  font-family: 'Eiko', serif;
+  font-family: inherit;
   font-style: italic;
 }
 
@@ -609,7 +619,7 @@ button.btn {
 
 .section.about .content h3 span {
   display: block;
-  font-family: 'Eiko', serif;
+  font-family: inherit;
   font-weight: 400;
   font-size: 4.4rem;
   letter-spacing: -0.02em;
@@ -653,7 +663,7 @@ button.btn {
   font-size: 4rem;
   letter-spacing: -0.02em;
   text-transform: none;
-  font-family: 'Eiko', serif;
+  font-family: inherit;
   font-weight: 400;
 }
 

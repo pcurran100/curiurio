@@ -15,7 +15,6 @@ function App() {
   const asset = (path) => `https://coveomusic.com${path}`
   const baseUrl = import.meta.env.BASE_URL
   const localAsset = (path) => `${baseUrl}${path.startsWith('/') ? path.slice(1) : path}`
-  const [email, setEmail] = useState('')
   const [submitState, setSubmitState] = useState({ status: 'idle', message: '' })
   const sectionRefs = useRef([])
   const rafRef = useRef(null)
@@ -199,7 +198,7 @@ function App() {
     },
   ]
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, emailValue, resetField) => {
     event.preventDefault()
 
     if (!supabase) {
@@ -215,7 +214,7 @@ function App() {
       
       const { error } = await supabase
         .from('users')
-        .insert([{ email }])
+        .insert([{ email: emailValue }])
 
       if (error) {
         // Handle duplicate email error gracefully
@@ -224,13 +223,13 @@ function App() {
             status: 'success',
             message: 'You\'re already on the wait list!',
           })
-          setEmail('')
+          resetField()
           return
         }
         throw error
       }
 
-      setEmail('')
+      resetField()
       setSubmitState({
         status: 'success',
         message: 'Thanks! We added you to the wait list.',
@@ -382,54 +381,9 @@ function App() {
     }
   }, [])
 
-  const WaitlistSection = ({ position }) => {
-    const inputId = `waitlist-email-${position}`
-    return (
-      <section className={`waitlistSection waitlistSection--${position}`}>
-        <div className="waitlistPanel">
-          <p className="waitlistPanel__title uppercase mono">Join the wait list</p>
-          <form
-            className="waitlistPanel__form"
-            onSubmit={handleSubmit}
-          >
-            <label htmlFor={inputId} className="visually-hidden">
-              Email address
-            </label>
-            <input
-              id={inputId}
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              required
-              autoComplete="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-            <button
-              type="submit"
-              className="btn btn__blurred dark mono"
-              disabled={submitState.status === 'submitting'}
-            >
-              Notify Me
-            </button>
-          </form>
-          {submitState.message ? (
-            <p
-              className={`waitlistPanel__feedback ${
-                submitState.status === 'error' ? 'waitlistPanel__feedback--error' : ''
-              }`}
-            >
-              {submitState.message}
-            </p>
-          ) : null}
-        </div>
-      </section>
-    )
-  }
-
   return (
     <div className="page">
-      <WaitlistSection position="top" />
+      <WaitlistSection position="top" onSubmit={handleSubmit} submitState={submitState} />
       <div className="sectionTrack">
         {sections.map((section, index) => (
           <section
@@ -448,7 +402,7 @@ function App() {
           </section>
         ))}
       </div>
-      <WaitlistSection position="bottom" />
+      <WaitlistSection position="bottom" onSubmit={handleSubmit} submitState={submitState} />
     </div>
   )
 }
@@ -473,3 +427,54 @@ function HeroScript() {
 }
 
 export default App
+
+function WaitlistSection({ position, onSubmit, submitState }) {
+  const [localEmail, setLocalEmail] = useState('')
+  const inputId = `waitlist-email-${position}`
+
+  const handleFormSubmit = (event) => {
+    onSubmit(event, localEmail, () => setLocalEmail(''))
+  }
+
+  return (
+    <section className={`waitlistSection waitlistSection--${position}`}>
+      <div className="waitlistPanel">
+        <p className="waitlistPanel__title uppercase mono">Join the wait list</p>
+        <form
+          className="waitlistPanel__form"
+          onSubmit={handleFormSubmit}
+        >
+          <label htmlFor={inputId} className="visually-hidden">
+            Email address
+          </label>
+          <input
+            id={inputId}
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+            autoComplete="email"
+            value={localEmail}
+            onChange={(event) => setLocalEmail(event.target.value)}
+          />
+          <button
+            type="submit"
+            className="btn btn__blurred dark mono"
+            disabled={submitState.status === 'submitting'}
+          >
+            Notify Me
+          </button>
+        </form>
+        {submitState.message ? (
+          <p
+            className={`waitlistPanel__feedback ${
+              submitState.status === 'error' ? 'waitlistPanel__feedback--error' : ''
+            }`}
+          >
+            {submitState.message}
+          </p>
+        ) : null}
+      </div>
+    </section>
+  )
+}
