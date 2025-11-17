@@ -279,7 +279,7 @@ button.btn {
 }
 
 .mono {
-  font-family: 'Milligram', sans-serif;
+  font-family: 'DM Mono', monospace;
 }
 
 .muted {
@@ -405,7 +405,7 @@ button.btn {
 }
 
 .side-text span {
-  font-family: 'Milligram', sans-serif;
+  font-family: 'Eiko', serif;
   font-style: italic;
 }
 
@@ -609,7 +609,7 @@ button.btn {
 
 .section.about .content h3 span {
   display: block;
-  font-family: 'Milligram', sans-serif;
+  font-family: 'Eiko', serif;
   font-weight: 400;
   font-size: 4.4rem;
   letter-spacing: -0.02em;
@@ -653,7 +653,7 @@ button.btn {
   font-size: 4rem;
   letter-spacing: -0.02em;
   text-transform: none;
-  font-family: 'Milligram', sans-serif;
+  font-family: 'Eiko', serif;
   font-weight: 400;
 }
 
